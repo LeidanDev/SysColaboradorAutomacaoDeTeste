@@ -22,4 +22,19 @@ jobs:
         run: npm ci
 
       - name: Run Cypress tests
-        run: npx cypress run
+        run: npx cypress run --reporter mochawesome
+
+      - name: Merge reports
+        if: always()
+        run: npx mochawesome-merge cypress/reports/*.json > cypress/reports/report.json
+
+      - name: Generate HTML report
+        if: always()
+        run: npx marge cypress/reports/report.json -f report -o cypress/reports/html
+
+      - name: Upload report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-report
+          path: cypress/reports/html

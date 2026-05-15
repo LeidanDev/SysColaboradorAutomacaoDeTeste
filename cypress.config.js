@@ -1,15 +1,3 @@
-// const { defineConfig } = require("cypress");
-
-// module.exports = defineConfig({
-//   allowCypressEnv: false,
-
-//   e2e: {
-//     setupNodeEvents(on, config) {
-//       // implement node event listeners here
-//     },
-//   },
-// });
-
 const { defineConfig } = require("cypress");
 
 const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
@@ -25,6 +13,15 @@ module.exports = defineConfig({
   e2e: {
 
     specPattern: "cypress/e2e/features/*.feature",
+
+    // 👇 ADICIONADO: REPORTER MOCHAWESOME
+    reporter: "mochawesome",
+    reporterOptions: {
+      reportDir: "cypress/reports",
+      overwrite: false,
+      html: false,
+      json: true,
+    },
 
     async setupNodeEvents(on, config) {
 

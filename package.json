@@ -4,6 +4,9 @@
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
     "@cucumber/cucumber": "^12.8.3",
     "cypress": "^15.15.0",
-    "esbuild": "^0.28.0"
+    "esbuild": "^0.28.0",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^4.4.1",
+    "mochawesome-report-generator": "^6.3.2"
   }
 }
