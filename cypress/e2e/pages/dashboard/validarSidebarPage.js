@@ -1,4 +1,4 @@
-class ValidarSidebar {
+class validarSidebar {
     static seletores() {
         return {
             //Seletores separados para facilitar a manutenção da Página de login
@@ -19,4 +19,4 @@ class ValidarSidebar {
     }
 }
 
-export default ValidarSidebar
+export default validarSidebar

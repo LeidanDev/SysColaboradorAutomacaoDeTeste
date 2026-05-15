@@ -1,8 +1,8 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-import LoginPage from '../../pages/login/loginPage';
-import LogoutPage from '../../pages/dashboard/LogoutPage';
+import loginPage from '../../pages/login/loginPage';
+import logoutPage from '../../pages/dashboard/logoutPage';
 
 
 When("clico em sair", () => {
-    LogoutPage.clicarBotaoSair()
+    logoutPage.clicarBotaoSair()
 });

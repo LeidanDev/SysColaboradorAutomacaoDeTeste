@@ -1,4 +1,4 @@
-class LogoutPage {
+class logoutPage {
     static seletores() {
         return {
             //Seletores separados para facilitar a manutenção da Página de login
@@ -19,4 +19,4 @@ class LogoutPage {
 
 }
 
-export default LogoutPage
+export default logoutPage
