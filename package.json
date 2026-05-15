@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^24.0.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
+    "@cucumber/cucumber": "^12.8.3",
+    "cypress": "^15.15.0",
+    "esbuild": "^0.28.0"
+  }
+}

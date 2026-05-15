@@ -1,0 +1,6 @@
+{
+  "usuarioAdmin": { "usuario": "admin", "senha": "admin123" },
+  "usuarioErrado": { "usuario": "admin2", "senha": "senhaErrada" },
+  "usuarioSemSenha": { "usuario": "admin", "senha": "" }
+
+}
