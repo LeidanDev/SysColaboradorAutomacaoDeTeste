@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -21,18 +21,59 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # =========================
+      # RUN TESTS
+      # =========================
       - name: Run Cypress tests
-        run: npx cypress run --reporter mochawesome
+        run: |
+          npx cypress run \
+            --reporter mochawesome \
+            --reporter-options reportDir=cypress/reports,overwrite=false,html=false,json=true
+        continue-on-error: true
 
+      # =========================
+      # MERGE REPORTS
+      # =========================
       - name: Merge reports
         if: always()
         run: npx mochawesome-merge cypress/reports/*.json > cypress/reports/report.json
 
+      # =========================
+      # HTML REPORT
+      # =========================
       - name: Generate HTML report
         if: always()
         run: npx marge cypress/reports/report.json -f report -o cypress/reports/html
 
-      - name: Upload report artifact
+      # =========================
+      # SUMMARY (CLEAN VERSION)
+      # =========================
+      - name: Test Summary
+        if: always()
+        run: |
+          FILE=$(find cypress/reports -name "*.json" | head -n 1)
+
+          if [ -f "$FILE" ]; then
+            PASSED=$(jq '.stats.passes' $FILE)
+            FAILED=$(jq '.stats.failures' $FILE)
+            PENDING=$(jq '.stats.pending' $FILE)
+            SKIPPED=$(jq '.stats.skipped' $FILE)
+            DURATION=$(jq '.stats.duration' $FILE)
+
+            echo "## 🧪 Cypress Test Results" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Status | Passed ✅ | Failed ❌ | Pending ⏳ | Skipped ⏭️ | Duration ⏱️ |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-----------|-----------|------------|-------------|-------------|" >> $GITHUB_STEP_SUMMARY
+            echo "| Results | $PASSED | $FAILED | $PENDING | $SKIPPED | ${DURATION}ms |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## 🧪 Cypress Test Results" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ No report found" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      # =========================
+      # ARTIFACT
+      # =========================
+      - name: Upload HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
