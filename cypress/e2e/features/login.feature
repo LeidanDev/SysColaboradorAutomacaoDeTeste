@@ -36,4 +36,4 @@ Funcionalidade: Login
     Quando informo o usuário do perfil "usuarioSemSenha"
     E não informo a senha
     E clico no botão login
-    Então devo ver a mensagem "Dashboard"
+    Então não devo ver a mensagem "Dashboard"
